@@ -41,16 +41,16 @@ def index():
 
 @socketio.on('join room')
 def test_getroom(message):
-    global sender_id
     join_room(message['room'])
-    emit('set room',{ 'room':list(request.namespace.rooms)[0],'sender':sender_id })
-    sender_id+=1
-    print "rooms:"
-    print list(request.namespace.rooms)[0]
+    emit('set room',{ 'room':list(request.namespace.rooms)[0],'sender':message['u_id'] })
+    print "rooms: " + str(list(request.namespace.rooms)) 
+    print "join room: " + str(list(request.namespace.rooms)[0])
+    print "set sender_id: " + message['u_id']
 
 @socketio.on('set msg')
 def test_setmsg(data):
-    print (data)
+    print "set msg"
+    print data
     emit('set msg',{'sender': data['sender'], 'chat_id': data['chat_id'], 'msg':data['msg'], 'score':data['score']}, room = data['room'])
 
 @socketio.on('my event')
