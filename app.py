@@ -18,20 +18,17 @@ user_id = []
 room_num = 0
 sender_id = 0
 
-def background_thread():
-    """Example of how to send server generated events to clients."""
-    count = 0
-    while True:
-        time.sleep(10)
-        count += 1
-        socketio.emit('my response',{'data': 'Server generated event', 'count': count})
+# def background_thread():
+#     """Example of how to send server generated events to clients."""
+#     count = 0
+#     while True:
+#         time.sleep(10)
+#         count += 1
+#         socketio.emit('my response',{'data': 'Server generated event', 'count': count})
 
 @app.route('/')
 def index():
     global thread
-    if thread is None:
-        thread = Thread(target=background_thread)
-        thread.start()
     return render_template('index.html')
 
 # global namespace no effect
