@@ -38,11 +38,10 @@ def index():
 
 @socketio.on('join room')
 def test_getroom(message):
+    print "join room"
+    print message
     join_room(message['room'])
     emit('set room',{ 'room':list(request.namespace.rooms)[0],'sender':message['u_id'] })
-    print "rooms: " + str(list(request.namespace.rooms)) 
-    print "join room: " + str(list(request.namespace.rooms)[0])
-    print "set sender_id: " + message['u_id']
 
 @socketio.on('set msg')
 def test_setmsg(data):
@@ -55,6 +54,12 @@ def test_updatecolor(data):
     print "update color"
     print data
     emit('update color',{'sender': data['sender'], 'chat_id': data['chat_id'], 'score': data['score']}, room = data['room'])
+
+@socketio.on('start chat')
+def test_startchat(data):
+    print "start chat"
+    print data
+    emit('start chat',{},room = data["room"])
 
 # @socketio.on('my event')
 # def test_message(message):
