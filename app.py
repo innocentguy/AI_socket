@@ -59,7 +59,7 @@ def test_updatecolor(data):
 def test_startchat(data):
     print "start chat"
     print data
-    emit('start chat',{},room = data["room"])
+    emit('start chat',{'name_hash':data["name_hash"]},room = data["room"])
 
 # @socketio.on('my event')
 # def test_message(message):
@@ -122,6 +122,9 @@ def test_startchat(data):
 
 @socketio.on('disconnect')
 def test_disconnect():
+    room = list(request.namespace.rooms)[0]
+    emit('quit room',{},room = room)
+    print room
     print('Client disconnected')
 
 if __name__ == '__main__':
